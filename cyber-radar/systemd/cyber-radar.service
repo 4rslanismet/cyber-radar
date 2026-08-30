@@ -1,0 +1,18 @@
+[Unit]
+Description=Cyber Intelligence Radar - toplama + analiz + brifing
+After=network-online.target docker.service
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=radar
+WorkingDirectory=/opt/cyber-radar
+# venv kullanıyorsanız (önerilir) aşağıdaki satırı venv'inizin python'una göre düzenleyin:
+ExecStart=/opt/cyber-radar/.venv/bin/python3 -m src.run_pipeline
+# .env dosyası WorkingDirectory içinden python-dotenv tarafından otomatik okunur.
+TimeoutStartSec=1800
+StandardOutput=journal
+StandardError=journal
+
+[Install]
+WantedBy=multi-user.target
